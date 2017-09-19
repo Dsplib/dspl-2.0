@@ -9,7 +9,7 @@ int main()
     double x = 2.0;
     double y;
 
-    int err = polyval_real(a, 2, &x, 1, &y);
+    int err = polyval_r64(a, 2, &x, 1, &y);
     printf("err = %d, y = %f\n", err, y);
 
     return 0;

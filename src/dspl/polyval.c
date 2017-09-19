@@ -26,25 +26,25 @@
 
 
 
-int polyval_real(double* a, int ord, double* x, int n, double* y)
+int polyval_r16(float* a, int ord, float* x, int n, float* y)
 {
 	int k;
 	int m;   
-	int res;
+	int err;
 	
 	if(!a || !x || !y)
 	{
-		res = DSPL_ERROR_PTR;
+		err = DSPL_ERROR_PTR;
 		goto exit_label;	
 	}
 	if(ord<0)
 	{
-		res = DSPL_ERROR_POLY_ORD;
+		err = DSPL_ERROR_POLY_ORD;
 		goto exit_label;	
 	}
 	if(n<1)
 	{
-		res = DSPL_ERROR_SIZE;
+		err = DSPL_ERROR_SIZE;
 		goto exit_label;	
 	}
 	
@@ -55,91 +55,142 @@ int polyval_real(double* a, int ord, double* x, int n, double* y)
 			y[k] = y[k]*x[k] + a[m];			
 	}  
 	
-	res = DSPL_OK;		
+	err = DSPL_OK;		
 exit_label:
-	//print_err(res, "polyval");
-	return res;
+	return err;
 }
+  
 
 
 
 
-
-/*
-int polyval_cmplx( complex* a,  int ord, complex* x, int n,	complex* y)
+int polyval_r64(double* a, int ord, double* x, int n, double* y)
 {
 	int k;
-	int m;
-	double tR;
-	double tI;
-	double *cI;
-	double *zI; 
-    int res;
+	int m;   
+	int err;
 	
-	if(!aR || !xR || !yR)
+	if(!a || !x || !y)
 	{
-		res = DSPL_ERROR_PTR;
+		err = DSPL_ERROR_PTR;
 		goto exit_label;	
 	}
 	if(ord<0)
 	{
-		res = DSPL_ERROR_POLY_ORD;
+		err = DSPL_ERROR_POLY_ORD;
 		goto exit_label;	
 	}
 	if(n<1)
 	{
-		res = DSPL_ERROR_SIZE;
+		err = DSPL_ERROR_SIZE;
 		goto exit_label;	
 	}
-	if((aI || xI)&& !yI)
-	{
-		res = DSPL_ERROR_PTR;
-		goto exit_label;	
-	}
-
-	if(!aI && !xI && !yI)
-	{
-		res = dspl_polyval(aR, ord, xR, n, yR);
-		goto exit_label;
-	}
-	cI = aI;
-	if(!cI)
-	{
-		cI = (double*)malloc((ord+1)*sizeof(double));
-		memset(cI, 0, (ord+1)*sizeof(double));
-	}
-
-	zI = xI;
-	if(!zI)
-	{
-		zI = (double*)malloc(n*sizeof(double));
-		memset(zI, 0, n*sizeof(double));
-	}
-
+	
 	for(k = 0; k < n; k++)
 	{
-		yR[k] = aR[ord];
-		yI[k] = cI[ord];
-	 	for(m = ord-1; m>-1; m--)
-		{
-			tR = yR[k]*xR[k] - yI[k]*zI[k] + aR[m];
-			tI = yR[k]*zI[k] + yI[k]*xR[k] + cI[m];
-			yR[k] = tR;
-			yI[k] = tI;	 	
-		}
-	} 
-
-	if(cI!=aI)
-		free(cI);
-
-	if(zI!=xI)
-		free(zI);
-
-	res = DSPL_OK;		
+		y[k] = a[ord];
+	 	for(m = ord-1; m > -1; m--)
+			y[k] = y[k]*x[k] + a[m];			
+	}  
+	
+	err = DSPL_OK;		
 exit_label:
-	dspl_print_err(res, "dspl_polyval_cmplx");
-	return res;
-
+	return err;
 }
 
-*/
+
+
+
+
+
+
+int polyval_c32(complex32* a, int ord, complex32* x, int n, complex32* y)
+{
+	int k;
+	int m;   
+	int err;
+	complex32 t;
+
+	if(!a || !x || !y)
+	{
+		err = DSPL_ERROR_PTR;
+		goto exit_label;	
+	}
+	if(ord<0)
+	{
+		err = DSPL_ERROR_POLY_ORD;
+		goto exit_label;	
+	}
+	if(n<1)
+	{
+		err = DSPL_ERROR_SIZE;
+		goto exit_label;	
+	}
+	
+	for(k = 0; k < n; k++)
+	{
+		y[k][0] = a[ord][0];
+        y[k][1] = a[ord][1];
+	 	for(m = ord-1; m > -1; m--)
+        {
+            t[0] = y[k][0]*x[k][0] - y[k][1]*x[k][1];
+            t[1] = y[k][1]*x[k][0] + y[k][0]*x[k][1];
+			y[k][0] = t[0] + a[m][0];	
+            y[k][1] = t[0] + a[m][1];	
+        }	
+	}  
+	
+	err = DSPL_OK;		
+exit_label:
+	return err;
+}
+
+
+
+
+
+
+int polyval_c128(complex128* a, int ord, complex128* x, int n, complex128* y)
+{
+	int k;
+	int m;   
+	int err;
+	complex128 t;
+
+	if(!a || !x || !y)
+	{
+		err = DSPL_ERROR_PTR;
+		goto exit_label;	
+	}
+	if(ord<0)
+	{
+		err = DSPL_ERROR_POLY_ORD;
+		goto exit_label;	
+	}
+	if(n<1)
+	{
+		err = DSPL_ERROR_SIZE;
+		goto exit_label;	
+	}
+	
+	for(k = 0; k < n; k++)
+	{
+		y[k][0] = a[ord][0];
+        y[k][1] = a[ord][1];
+	 	for(m = ord-1; m > -1; m--)
+        {
+            t[0] = y[k][0]*x[k][0] - y[k][1]*x[k][1];
+            t[1] = y[k][1]*x[k][0] + y[k][0]*x[k][1];
+			y[k][0] = t[0] + a[m][0];	
+            y[k][1] = t[0] + a[m][1];	
+        }	
+	}  
+	
+	err = DSPL_OK;		
+exit_label:
+	return err;
+}
+
+
+
+
