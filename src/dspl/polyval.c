@@ -1,21 +1,21 @@
 /*
-*Copyright (c) 2015 - 2017 Sergey Bakhurin
-* Digital Signal Processing Library [http://dsplib.org]
+*   DSPL-2.0 Digital Signal Processing Library
+*   Copyright (C) 2017  Sergey Bakhurin [http://dsplib.org]
 *
-* This file is part of DSPL.
-* 
-* DSPL is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-*(at your option) any later version.
-* 
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-* 
-* You should have received a copy of the GNU Lesser General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*   This file is part of DSPL-2.0
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version. 
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
 #include <stdlib.h>
@@ -26,7 +26,7 @@
 
 
 
-int polyval_r16(float* a, int ord, float* x, int n, float* y)
+int polyval_r32(float* a, int ord, float* x, int n, float* y)
 {
 	int k;
 	int m;   
@@ -104,12 +104,12 @@ exit_label:
 
 
 
-int polyval_c32(complex32* a, int ord, complex32* x, int n, complex32* y)
+int polyval_c64(complex64* a, int ord, complex64* x, int n, complex64* y)
 {
 	int k;
 	int m;   
 	int err;
-	complex32 t;
+	complex64 t;
 
 	if(!a || !x || !y)
 	{

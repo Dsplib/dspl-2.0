@@ -1,21 +1,21 @@
 /*
-* Copyright (c) 2015-2017 Sergey Bakhurin
-* Digital Signal Processing Library [http://dsplib.org]
+*   DSPL-2.0 Digital Signal Processing Library
+*   Copyright (C) 2017  Sergey Bakhurin [http://dsplib.org]
 *
-* This file is part of DSPL.
-*  
-* DSPL is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-*(at your option) any later version.
-* 
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-* 
-* You should have received a copy of the GNU Lesser General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*   This file is part of DSPL-2.0
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version. 
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
 
@@ -36,7 +36,7 @@
      
 
 typedef double complex128[2];	 
-typedef float  complex32[2];
+typedef float  complex64[2];
 
 
 #define DSPL_OK						0
@@ -74,9 +74,11 @@ typedef float  complex32[2];
 
 
 
+int r32_to_c64(float*   x, int n, complex64**  y);
+int r64_to_c128(double* x, int n, complex128** y);
 
 
-int polyval_c32  (complex32*  a,  int ord,  complex32*  x, int n, complex32*  y);
+int polyval_c64  (complex64*  a,  int ord,  complex64*  x, int n, complex64*  y);
 int polyval_c128 (complex128* a,  int ord,  complex128* x, int n, complex128* y);
 int polyval_r16 (float*       a,  int ord,  float*      x, int n, float*      y);
 int polyval_r64 (double*      a,  int ord,  double*     x, int n, double*     y);

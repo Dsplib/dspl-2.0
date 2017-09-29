@@ -1,12 +1,12 @@
 /*!
  	\ingroup SPEC_MATH_COMMON_GROUP
-	\fn int polyval_r16(float* a, int ord, float* x, int n, float* y)
+	\fn int polyval_r32(float* a, int ord, float* x, int n, float* y)
 	\brief Расчет вещественного полинома
 	
 	Функция рассчитывает полином \f$P_N(x)\f$  \f$N-\f$ого порядка для вещественного
 	аргумента, заданного вектором `x`.<BR>
 		\f[
-		P_N(x) = a_0 + a_1 \cdot x + a_2 \cdot x^2 + a_3*x^3 + ... a_N*x^N.
+		P_N(x) = a_0 + a_1 \cdot x + a_2 \cdot x^2 + a_3 \cdot x^3 + ... a_N \cdot x^N.
 	\f]
 	Для расчета используется формула Горнера:<BR>
 	\f[
@@ -54,7 +54,7 @@
 	Функция рассчитывает полином \f$P_N(x)\f$  \f$N-\f$ого порядка для вещественного
 	аргумента, заданного вектором `x`.<BR>
 		\f[
-		P_N(x) = a_0 + a_1 \cdot x + a_2 \cdot x^2 + a_3*x^3 + ... a_N*x^N.
+		P_N(x) = a_0 + a_1 \cdot x + a_2 \cdot x^2 + a_3 \cdot x^3 + ... a_N \cdot x^N.
 	\f]
 	Для расчета используется формула Горнера:<BR>
 	\f[
@@ -100,7 +100,7 @@
 
 /*!
  	\ingroup SPEC_MATH_COMMON_GROUP
-	\fn int polyval_c32(complex32* a, int ord, complex32* x, int n, complex32* y)
+	\fn int polyval_c64(complex64* a, int ord, complex64* x, int n, complex64* y)
 	\brief Расчет комплексного полинома
 	
 	Функция рассчитывает полином \f$P_N(x)\f$  \f$N-\f$ого порядка для комплексного
