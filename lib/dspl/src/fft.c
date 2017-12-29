@@ -51,8 +51,7 @@ int fft_shift(double* x, int n, double* y)
 			tmp = x[k];
 			y[k] = x[k+n2];
 			y[k+n2] = tmp;
-		}
-			
+		}			
 	}
 	else
 	{
