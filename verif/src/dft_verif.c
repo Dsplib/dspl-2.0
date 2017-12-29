@@ -23,19 +23,28 @@
 #include "dspl.h"
 
 
+#define N 32
 
-#define N 10
-
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) 
+{
 
     double    x[N];
     complex_t y[N];
-
-    linspace(0.0, 1.0,   N, DSPL_SYMMETRIC, x);
-    linspace(0.0, 1.0, 2*N, DSPL_SYMMETRIC, (double*)x);
+    complex_t z[N];
     
-    writebin(x, N, DAT_DOUBLE,  "test_double.bin");
-    writebin(y, N, DAT_COMPLEX, "test_complex.bin");
 
+    randu(x, N);
+    dft(x, N, y);    
+
+    writebin(x, N, DAT_DOUBLE,  "dat/dft_double_in.bin");
+    writebin(y, N, DAT_COMPLEX, "dat/dft_double_out.bin");
+    
+
+    randu((double*)z, 2*N);
+    dft_cmplx(z, N, y);    
+
+    writebin(z, N, DAT_COMPLEX, "dat/dft_complex_in.bin");
+    writebin(y, N, DAT_COMPLEX, "dat/dft_complex_out.bin");
+    
     return 0;
 }

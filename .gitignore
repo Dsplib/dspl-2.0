@@ -3,3 +3,7 @@
 *.exe
 *.so
 *.dll
+*.log
+*.dat
+*.txt
+*.csv

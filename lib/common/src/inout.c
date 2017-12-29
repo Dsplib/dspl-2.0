@@ -74,7 +74,7 @@ int writebin(void* x, int n, int dtype, char* fn)
             }
             break;
         case DAT_COMPLEX:
-            if(fwrite((double*)x, sizeof(double), 2*n, pFile) != 2*n)
+            if(fwrite((complex_t*)x, sizeof(complex_t), n, pFile) != n)
             {   
                 res = ERROR_FWRITE_SIZE;
                 goto exit_label;

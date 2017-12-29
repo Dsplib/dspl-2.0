@@ -46,6 +46,9 @@ typedef double complex_t[2];
 
 #define SQR(x) ((x) * (x)) 
 
+#define ABS(x) sqrt( RE(x) * RE(x) + IM(x) * IM(x))
+
+
 
 
 
@@ -76,6 +79,7 @@ typedef double complex_t[2];
 #define ERROR_PTR					    0x16201800
 /* Q									0x17xxxxxx*/
 /* R									0x18xxxxxx*/
+#define ERROR_RAND_SIGMA                0x18011909
 /* S									0x19xxxxxx*/
 #define ERROR_SIZE					    0x19092605
 #define ERROR_SYM_TYPE                  0x19251320

@@ -23,19 +23,22 @@
 #include "dspl.h"
 
 
-
 #define N 10
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) 
+{
 
     double    x[N];
     complex_t y[N];
+    int res;
 
-    linspace(0.0, 1.0,   N, DSPL_SYMMETRIC, x);
-    linspace(0.0, 1.0, 2*N, DSPL_SYMMETRIC, (double*)x);
+    linspace(0.0, N, N, DSPL_PERIODIC, x);
+    linspace(0.0, 2.0*N, 2*N, DSPL_PERIODIC, (double*)y);
     
-    writebin(x, N, DAT_DOUBLE,  "test_double.bin");
-    writebin(y, N, DAT_COMPLEX, "test_complex.bin");
+    res = writebin(x, N, DAT_DOUBLE,  "dat/writebin_double.bin");
+    printf("res= %d\n", res);
+    res = writebin(y, N, DAT_COMPLEX, "dat/writebin_complex.bin");
+    printf("res= %d\n", res);
 
     return 0;
 }
