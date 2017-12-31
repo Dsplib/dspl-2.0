@@ -27,17 +27,20 @@
 /**************************************************************************************************
 convert double array to a complex array 
 ***************************************************************************************************/
-int re2cmplx(double* x, int n, complex_t *y)
+int re2cmplx(double* x, int n, complex_t **y)
 {
     int k;
     if(!x || !y)
         return ERROR_PTR;
     if(n < 1)
         return ERROR_SIZE;
+
+    (*y) = (complex_t*) realloc(*y, n*sizeof(complex_t));
+
     for(k = 0; k < n; k++)
     {
-        RE(y[k]) = x[k];
-        IM(y[k]) = 0.0;
+        RE((*y)[k]) = x[k];
+        IM((*y)[k]) = 0.0;
     }    
     return RES_OK;
 }
@@ -49,18 +52,25 @@ int re2cmplx(double* x, int n, complex_t *y)
 /**************************************************************************************************
 convert complex array to a re and im arrays 
 ***************************************************************************************************/
-int cmplx2re(complex_t* x, int n, double *re, double* im)
+int cmplx2re(complex_t* x, int n, double **re, double **im)
 {
     int k;
     if(!x)
         return ERROR_PTR;
     if(n < 1)
         return ERROR_SIZE;
+
     if(re)
+    {
+        (*re) = (double*) realloc(*re, n*sizeof(double));
         for(k = 0; k < n; k++)
-            re[k] = RE(x[k]);
+            (*re)[k] = RE(x[k]);
+    }
     if(im)
+    {
+        (*im) = (double*) realloc(*im, n*sizeof(double));
         for(k = 0; k < n; k++)
-            im[k] = IM(x[k]);
+            (*im)[k] = IM(x[k]);
+    }
     return RES_OK;
 }

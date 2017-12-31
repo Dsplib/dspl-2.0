@@ -11,6 +11,6 @@ zr = fft(xr);
 zc = fft(xc);
 
 verification("dft for double  vector",  yr, zr);
-verification("fft for complex  vector", yc, zc);
+verification("dft for complex  vector", yc, zc);
 
 

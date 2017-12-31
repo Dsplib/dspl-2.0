@@ -21,26 +21,48 @@
 
 
 #include <stdio.h>
+#include <math.h>
 #include "dspl.h"
 #include "plot.h"
 
 
-#define N 10
+#define ORD 4
+#define N 500
 
 int main(int argc, char* argv[]) {
 
-    double x[N], y[N];
+    double b[ORD+1], a[ORD+1];
     void* hplot;
+    complex_t h[N];
+    double w[N];
+    double H[N];
+
     int i;
 
-    linspace(0.0, 1.0, N, DSPL_SYMMETRIC, x);
-    for(i =0; i < N; i++)
-        y[i] = SQR(x[i]);
-
-
+    logspace(-2, 2, N, DSPL_SYMMETRIC, w);
     hplot = plot_create();
 
-    plot(hplot, x, y, N, "SQR");
+    butter_ap(3.0, ORD, b, a);
+    freqs(b,a,ORD, w, N, h);
+    for( i= 0; i < N; i++)
+        H[i] = 10.0*log10(ABSSQR(h[i]));
+    plot_logx(hplot, w, H, N, "Butter");
+
+    cheby1_ap(3.0, ORD, b, a);
+    freqs(b,a,ORD, w, N, h);
+    for( i= 0; i < N; i++)
+        H[i] = 10.0*log10(ABSSQR(h[i]));
+    plot_logx(hplot, w, H, N, "Cheby1");
+
+    cheby2_ap(50.0, ORD, b, a);
+    freqs(b,a,ORD, w, N, h);
+    for( i= 0; i < N; i++)
+        H[i] = 10.0*log10(ABSSQR(h[i]));
+    plot_logx(hplot, w, H, N, "Cheby2");    
+
+
+
+
    
     printf("Press any key...\n");
 

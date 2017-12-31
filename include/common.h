@@ -41,27 +41,35 @@ typedef double complex_t[2];
 #define RE(x) (x[0])
 #define IM(x) (x[1]) 
 
-#define CMRE(a,b)  RE(a) * RE(b) - IM(a) * IM(b)
-#define CMIM(a,b)  RE(a) * IM(b) + IM(a) * RE(b)
+#define CMRE(a,b)  ((RE(a)) * (RE(b)) - (IM(a)) * (IM(b)))
+#define CMIM(a,b)  ((RE(a)) * (IM(b)) + (IM(a)) * (RE(b)))
+
+#define CMCONJRE(a, b)  ((RE(a)) * (RE(b)) + (IM(a)) * (IM(b)))
+#define CMCONJIM(a, b)  ((IM(a)) * (RE(b)) - (RE(a)) * (IM(b))) 
 
 #define SQR(x) ((x) * (x)) 
 
-#define ABS(x) sqrt( RE(x) * RE(x) + IM(x) * IM(x))
+#define ABS(x)    sqrt((RE(x)) * (RE(x)) + (IM(x)) * (IM(x)))
+#define ABSSQR(x)     ((RE(x)) * (RE(x)) + (IM(x)) * (IM(x)))
 
 
 
 
+#define RES_OK						    0
 
-#define RES_OK						0
-
-/* Error codes 									*/
+/* Error codes 									  */
 /* A									0x01xxxxxx*/
 /* B									0x02xxxxxx*/
 /* C									0x03xxxxxx*/
 /* D									0x04xxxxxx*/
 #define ERROR_DAT_TYPE                  0x04012020
+#define ERROR_DIV_ZERO                  0x04102226
 /* E									0x05xxxxxx*/
 /* F									0x06xxxxxx*/
+#define ERROR_FILTER_A0                 0x06100100
+#define ERROR_FILTER_ORD                0x06101518
+#define ERROR_FILTER_RP                 0x06101816
+#define ERROR_FILTER_RS                 0x06101819
 #define ERROR_FNAME                     0x06140113
 #define ERROR_FOPEN                     0x06151605
 #define ERROR_FWRITE_SIZE               0x06231820
@@ -96,8 +104,8 @@ typedef double complex_t[2];
 #define DAT_COMPLEX     1
 
 
-int cmplx2re(complex_t* x, int n, double *re, double* im);
-int re2cmplx(double* x, int n, complex_t *y);
+int re2cmplx(double* x, int n, complex_t **y);
+int cmplx2re(complex_t* x, int n, double **re, double **im);
 int writebin(void* x, int n, int dtype, char* fn);
 
 #endif

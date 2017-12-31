@@ -55,6 +55,30 @@ int plot(void* hplot, double* x, double* y, int n, char* legend)
 
 
 /**************************************************************************************************
+logX PLOT
+***************************************************************************************************/
+int plot_logx(void* hplot, double* x, double* y, int n, char* legend)
+{
+    if(!x || !y)
+        return ERROR_PTR;
+    if(n<1)
+        return ERROR_SIZE;
+    if(!hplot)
+        return ERROR_PLOT_HANDLE;
+
+    gnuplot_setstyle((gnuplot_ctrl*)hplot, "lines");
+
+    gnuplot_cmd((gnuplot_ctrl*)hplot, "set logscale x");
+
+    gnuplot_plot_xy((gnuplot_ctrl*)hplot, x, y, n, legend);
+   
+    return RES_OK;
+}
+
+
+
+
+/**************************************************************************************************
 Create Plot
 ***************************************************************************************************/
 void* plot_create(void)

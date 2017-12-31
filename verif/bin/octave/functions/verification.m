@@ -1,6 +1,6 @@
 function verification(msg, x, y)
 
-str = msg;
+str = ['[OCTAVE] ' msg];
 
 while(length(str) < 48)
 	str = [str, '.'];

@@ -19,34 +19,34 @@
 */
 
 
-
 #include <stdio.h>
 #include "dspl.h"
-#include "plot.h"
 
 
-#define N 10
-
-int main(int argc, char* argv[]) {
-
-    double x[N], y[N];
-    void* hplot;
-    int i;
-
-    linspace(0.0, 1.0, N, DSPL_SYMMETRIC, x);
-    for(i =0; i < N; i++)
-        y[i] = SQR(x[i]);
+#define N 32
 
 
-    hplot = plot_create();
+int main(int argc, char* argv[]) 
+{
 
-    plot(hplot, x, y, N, "SQR");
-   
-    printf("Press any key...\n");
+    double    xr[N];
+    complex_t xc[N], yr[N], yc[N];
+    int ind[N], k;
 
-    getchar();
+    randu(xr, N);
+    randu((double*)xc, 2*N);
 
+    for(k = 0; k < N; k++)
+        ind[k] = k;
 
-    plot_delete(hplot);
+    goertzel(xr, N, ind, N, yr);
+    goertzel_cmplx(xc, N, ind, N, yc);
+
+    writebin(xr, N, DAT_DOUBLE,  "dat/goertzel_double_in.bin");
+    writebin(yr, N, DAT_COMPLEX, "dat/goertzel_double_out.bin");
+
+    writebin(xc, N, DAT_COMPLEX, "dat/goertzel_complex_in.bin");
+    writebin(yc, N, DAT_COMPLEX, "dat/goertzel_complex_out.bin");
+ 
     return 0;
 }

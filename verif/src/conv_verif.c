@@ -19,34 +19,35 @@
 */
 
 
-
 #include <stdio.h>
 #include "dspl.h"
-#include "plot.h"
 
 
-#define N 10
-
-int main(int argc, char* argv[]) {
-
-    double x[N], y[N];
-    void* hplot;
-    int i;
-
-    linspace(0.0, 1.0, N, DSPL_SYMMETRIC, x);
-    for(i =0; i < N; i++)
-        y[i] = SQR(x[i]);
+#define N 32
+#define M 64
 
 
-    hplot = plot_create();
+int main(int argc, char* argv[]) 
+{
 
-    plot(hplot, x, y, N, "SQR");
-   
-    printf("Press any key...\n");
+    double    ar[N], br[M], cr[N+M-1];
+    complex_t ac[N], bc[M], cc[N+M-1];
 
-    getchar();
+    randu(ar, N);
+    randu(br, M);
+    conv(ar, N, br, M, cr);    
 
+    writebin(ar, N, DAT_DOUBLE,  "dat/conv_double_a_in.bin");
+    writebin(br, M, DAT_DOUBLE,  "dat/conv_double_b_in.bin");
+    writebin(cr, M+N-1, DAT_DOUBLE,  "dat/conv_double_out.bin");
 
-    plot_delete(hplot);
+    randu((double*)ac, 2*N);
+    randu((double*)bc, 2*M);
+    conv_cmplx(ac, N, bc, M, cc);
+
+    writebin(ac, N, DAT_COMPLEX,  "dat/conv_complex_a_in.bin");
+    writebin(bc, M, DAT_COMPLEX,  "dat/conv_complex_b_in.bin");
+    writebin(cc, M+N-1, DAT_COMPLEX,  "dat/conv_complex_out.bin");    
+    
     return 0;
 }

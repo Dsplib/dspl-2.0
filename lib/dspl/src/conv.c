@@ -116,3 +116,59 @@ int conv_cmplx(complex_t* a, int na, complex_t* b, int nb, complex_t* c)
 
 
 
+/**************************************************************************************************
+IIR FILTER for real vector
+**************************************************************************************************/
+int filter_iir(double* b, double* a, int ord, double* x, int n, double* y)
+{
+	double* buf = NULL;
+	double* an  = NULL;
+	double  u;
+	int 	k;
+	int		m;
+	int 	count;
+	
+	if(!b || !x || !y)
+		return  ERROR_PTR;
+
+	if(ord < 1 || n < 1)
+	    return ERROR_SIZE;
+
+	if(a && a[0]==0.0)
+		return ERROR_FILTER_A0;
+
+	count = ord + 1;	
+	buf = (double*) malloc(count*sizeof(double));
+	an =  (double*) malloc(count*sizeof(double));
+	
+	memset(buf, 0, count*sizeof(double));
+	
+	if(!a)
+		memset(an, 0, count*sizeof(double));
+	else
+		for(k = 0; k < count; k++)
+			an[k] = a[k] / a[0];
+	
+	for(k = 0; k < n; k++)
+	{
+		for(m = ord; m > 0; m--)
+			buf[m] = buf[m-1];
+		u = 0.0;
+		for(m = ord; m > 0; m--)
+			u += buf[m]*an[m];
+		
+		buf[0] = x[k] - u;
+		y[k] = 0.0;
+		for(m = 0; m < count; m++)
+			y[k] += buf[m] * b[m];		
+	}
+	
+	if(buf)
+		free(buf);
+	if(an)
+		free(an);    
+	return RES_OK;
+}
+
+
+

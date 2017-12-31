@@ -54,7 +54,7 @@
 
 
 int plot(void* hplot, double* x, double* y, int n, char* legend);
-
+int plot_logx(void* hplot, double* x, double* y, int n, char* legend);
 
 void* plot_create();
 
