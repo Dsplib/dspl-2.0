@@ -38,8 +38,6 @@ int cheby2_ap(double Rs, int ord, double *b, double *a);
 int conv(double* a, int na, double* b, int nb, double* c);
 int conv_cmplx(complex_t* a, int na, complex_t* b, int nb, complex_t* c);
 
-
-
 int dft(double* x, int n, complex_t *y);
 int dft_cmplx(complex_t* x, int n, complex_t *y);
 
@@ -48,14 +46,13 @@ int filter_iir(double* b, double* a, int ord, double* x, int n, double* y);
 int fft_shift(double* x, int n, double* y);
 
 int freqs(double* b, double* a, int ord, double* w, int n, complex_t *h);
+int freqz(double* b, double* a, int ord, double* w, int n, complex_t *h);
 
 int goertzel(double *x, int n, int *ind, int k, complex_t *y);
 int goertzel_cmplx(complex_t *x, int n, int *ind, int k, complex_t *y);
 
 int linspace(double x0, double x1, int n, int type, double* x);
 int logspace(double x0, double x1, int n, int type, double* x);
-
-
 
 int polyval(double* a, int ord, double* x, int n, double* y);
 int polyval_cmplx(complex_t* a, int ord, complex_t* x, int n, complex_t* y);

@@ -1,0 +1,3 @@
+/*
+int freqs(double* b, double* a, int ord, double* w, int n, complex_t *h)
+*/

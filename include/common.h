@@ -107,6 +107,7 @@ typedef double complex_t[2];
 int re2cmplx(double* x, int n, complex_t **y);
 int cmplx2re(complex_t* x, int n, double **re, double **im);
 int writebin(void* x, int n, int dtype, char* fn);
+int writetxt(double* x, double *y, int n, char* fn);
 
 #endif
  

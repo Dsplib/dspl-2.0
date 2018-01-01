@@ -91,3 +91,39 @@ exit_label:
 	return res;	
 }
 
+
+
+
+
+
+/**************************************************************************************************
+Write a real arrays to the text file "fn" 
+***************************************************************************************************/
+int writetxt(double* x, double *y, int n, char* fn)
+{
+	int k;
+	FILE* pFile = NULL;
+	
+	if(!x)
+		return ERROR_PTR;
+	if(n < 1)
+		return ERROR_SIZE;
+	if(!fn)
+		return ERROR_FNAME;
+	
+	pFile = fopen(fn, "w+");
+	if(pFile == NULL)
+		return ERROR_FOPEN;
+
+	if(y)
+		for(k = 0; k < n; k++)
+			fprintf(pFile, "%+.12E\t%+.12E\n", x[k], y[k]);
+	else
+		for(k = 0; k < n; k++)
+			fprintf(pFile, "%+.12E\n", x[k]);
+	
+	fclose(pFile);
+	return RES_OK;	
+}
+
+
