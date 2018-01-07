@@ -60,14 +60,10 @@ int main(int argc, char* argv[]) {
         H[i] = 10.0*log10(ABSSQR(h[i]));
     plot_logx(hplot, w, H, N, "Cheby2");    
 
-
-
-
    
     printf("Press any key...\n");
 
     getchar();
-
 
     plot_delete(hplot);
     return 0;
