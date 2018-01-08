@@ -88,6 +88,8 @@ typedef double complex_t[2];
 /* Q									0x17xxxxxx*/
 /* R									0x18xxxxxx*/
 #define ERROR_RAND_SIGMA                0x18011909
+#define ERROR_RESAMPLE_RATIO            0x18051801
+#define ERROR_RESAMPLE_FRAC_DELAY       0x18050604
 /* S									0x19xxxxxx*/
 #define ERROR_SIZE					    0x19092605
 #define ERROR_SYM_TYPE                  0x19251320
@@ -95,6 +97,8 @@ typedef double complex_t[2];
 /* U									0x21xxxxxx*/
 /* V									0x22xxxxxx*/
 /* W									0x23xxxxxx*/
+#define ERROR_WIN_TYPE                  0x23092025
+#define ERROR_WIN_SYM                   0x23091925
 /* X									0x24xxxxxx*/
 /* Y									0x25xxxxxx*/
 /* Z									0x26xxxxxx*/
@@ -106,6 +110,10 @@ typedef double complex_t[2];
 
 int re2cmplx(double* x, int n, complex_t **y);
 int cmplx2re(complex_t* x, int n, double **re, double **im);
+
+int trapint(double* x, double* y, int n, double* sum);
+int trapint_cmplx(double* x, complex_t* y, int n, complex_t* sum);
+
 int writebin(void* x, int n, int dtype, char* fn);
 int writetxt(double* x, double *y, int n, char* fn);
 

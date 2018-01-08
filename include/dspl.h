@@ -26,14 +26,34 @@
 
 
 
-#define DSPL_SYMMETRIC  0x00000000
-#define DSPL_PERIODIC  0x00000001
+#define DSPL_SYMMETRIC                  0x00000000
+#define DSPL_PERIODIC                   0x00000001
 
+#define DSPL_WIN_SYM_MASK               0x00000001
+#define DSPL_WIN_MASK                   0x000FFFFE
+
+#define DSPL_WIN_SYMMETRIC              DSPL_SYMMETRIC
+#define DSPL_WIN_PERIODIC               DSPL_PERIODIC
+
+
+#define DSPL_WIN_BARTLETT               0x00000004
+#define DSPL_WIN_BARTLETT_HANN          0x00000008	
+#define DSPL_WIN_BLACKMAN               0x00000010			
+#define DSPL_WIN_BLACKMAN_HARRIS        0x00000040	 
+#define DSPL_WIN_BLACKMAN_NUTTALL       0x00000080    	
+#define DSPL_WIN_FLAT_TOP               0x00000100			
+#define DSPL_WIN_GAUSSIAN               0x00000400			
+#define DSPL_WIN_HAMMING                0x00000800			
+#define DSPL_WIN_HANN                   0x00001000				
+#define DSPL_WIN_LANCZOS                0x00004000			
+#define DSPL_WIN_NUTTALL                0x00008000			
+#define DSPL_WIN_RECT                   0x00010000				
+#define DSPL_WIN_COS                    0x00040000
+  
 
 int butter_ap(double Rp, int ord, double* b, double* a);
 int cheby1_ap(double Rp, int ord, double* b, double* a);
 int cheby2_ap(double Rs, int ord, double *b, double *a);
-
 
 int conv(double* a, int na, double* b, int nb, double* c);
 int conv_cmplx(complex_t* a, int na, complex_t* b, int nb, complex_t* c);
@@ -57,10 +77,12 @@ int logspace(double x0, double x1, int n, int type, double* x);
 int polyval(double* a, int ord, double* x, int n, double* y);
 int polyval_cmplx(complex_t* a, int ord, complex_t* x, int n, complex_t* y);
 
-
-
 int randn(double* x, int n, double mu, double sigma);
 int randu(double* x, int n);
+
+int rcompos(double *b, double *a, int n, double *c, double *d, int p, double *beta, double *alpha);
+
+int window(double* w, int n, int win_type, double param);
 
 #endif
  
