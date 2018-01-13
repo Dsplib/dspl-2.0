@@ -19,7 +19,7 @@
 */
 
 
-
+#include <stdio.h>
 #include <math.h>
 #include "dspl.h"
 

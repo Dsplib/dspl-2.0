@@ -26,6 +26,16 @@
 
 
 
+typedef struct{
+    void      *pfftw;
+    complex_t *in;
+    complex_t *out;
+    size_t     size;
+} fft_t;
+
+
+
+
 #define DSPL_SYMMETRIC                  0x00000000
 #define DSPL_PERIODIC                   0x00000001
 
@@ -62,6 +72,10 @@ int dft(double* x, int n, complex_t *y);
 int dft_cmplx(complex_t* x, int n, complex_t *y);
 
 int filter_iir(double* b, double* a, int ord, double* x, int n, double* y);
+
+
+int fft_create( fft_t *pfft, int n);
+void fft_destroy(fft_t *pfft);
 
 int fft_shift(double* x, int n, double* y);
 

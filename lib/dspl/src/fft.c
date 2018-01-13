@@ -23,6 +23,93 @@
 #include <string.h>
 #include <math.h>
 #include "dspl.h"
+#include "fftw3.h"
+
+
+
+/**************************************************************************************************
+Create FFT object
+***************************************************************************************************/
+int fft_create( fft_t *pfft, int n)
+{
+    if(!pfft)
+        return ERROR_PTR;
+    if(n<1)
+        return ERROR_SIZE;
+
+    if(pfft->in)
+        if(pfft->size != n)
+            pfft->in = (complex_t*) realloc(pfft->in, n*sizeof(complex_t));
+    else
+        pfft->in = (complex_t*) malloc(n*sizeof(complex_t));
+ 
+    if(pfft->out)
+        if(pfft->size != n)
+            pfft->out = (complex_t*) realloc(pfft->out, n*sizeof(complex_t));
+    else
+        pfft->out = (complex_t*) malloc(n*sizeof(complex_t));
+    
+    pfft->size = n;
+
+    if(pfft->pfftw)
+        fftw_destroy_plan(pfft->pfftw);
+
+
+    pfft->pfftw = (void*)fftw_plan_dft_1d(n, pfft->in, pfft->out, FFTW_FORWARD, FFTW_ESTIMATE);  
+
+    if(!pfft->pfftw)
+        return ERROR_FFT_CREATE;
+
+    return RES_OK;
+}
+
+
+
+/**************************************************************************************************
+Destroy FFT object
+***************************************************************************************************/
+void fft_destroy(fft_t *pfft)
+{
+    if(pfft)
+        return;
+
+    if(pfft->pfftw)
+        fftw_destroy_plan(pfft->pfftw);
+
+    if(pfft->in)
+        free(pfft->in);
+    
+    if(pfft->out)
+        free(pfft->out);
+
+    pfft->size = 0;
+}
+
+
+
+/**************************************************************************************************
+Destroy FFT object
+***************************************************************************************************/
+int fft_cmplx(complex_t *x, int n, fft_t* pfft, complex_t* y)
+{
+    if(!x || !y || !pfft)
+        return ERROR_PTR;
+
+    if(n<1)
+        return ERROR_SIZE;
+
+    if(n != pfft->size)
+       fft_create(pfft, n);
+
+    memcpy(pfft->in, x, n*sizeof(complex_t));
+    
+    fftw_execute(pfft->pfftw);
+
+    memcpy(y, pfft->out, n*sizeof(complex_t));
+    return RES_OK;
+
+}
+
 
 
 
@@ -64,3 +151,11 @@ int fft_shift(double* x, int n, double* y)
 	}	
 	return RES_OK;
 }
+
+
+
+
+
+
+
+

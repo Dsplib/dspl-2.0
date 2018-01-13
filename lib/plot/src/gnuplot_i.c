@@ -108,7 +108,7 @@ gnuplot_ctrl * gnuplot_init(void)
     handle->nplots = 0 ;
     gnuplot_setstyle(handle, "points") ;
     handle->ntmp = 0 ;
-
+    handle->color = 0;
     handle->gnucmd = popen("gnuplot", "w") ;
     if (handle->gnucmd == NULL) {
         fprintf(stderr, "error starting gnuplot, is gnuplot or gnuplot.exe in your path?\n") ;
@@ -705,15 +705,38 @@ char const * gnuplot_tmpfile(gnuplot_ctrl * handle)
     return tmp_filename;
 }
 
+
+
+
+
+
+
 void gnuplot_plot_atmpfile(gnuplot_ctrl * handle, char const* tmp_filename, char const* title)
 {
     char const *    cmd    = (handle->nplots > 0) ? "replot" : "plot";
     title                  = (title == NULL)      ? "(none)" : title;
-    gnuplot_cmd(handle, "%s \"%s\" title \"%s\" with %s", cmd, tmp_filename,
-                  title, handle->pstyle) ;
+    if(handle->color)
+        gnuplot_cmd(handle, "%s \"%s\" title \"%s\" with %s linecolor %d ", cmd, tmp_filename,
+                  title, handle->pstyle, handle->color);    
+    else
+        gnuplot_cmd(handle, "%s \"%s\" title \"%s\" with %s", cmd, tmp_filename,
+                  title, handle->pstyle); 
+    
     handle->nplots++ ;
     return ;
 }
+
+
+
+void gnuplot_set_color(gnuplot_ctrl * handle, int color)
+{    
+    handle->color = color;
+    return;
+}
+
+
+
+
 
 
 /* vim: set ts=4 et sw=4 tw=120 */

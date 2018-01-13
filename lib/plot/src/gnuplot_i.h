@@ -65,6 +65,7 @@ typedef struct _GNUPLOT_CTRL_ {
     char*      tmp_filename_tbl[GP_MAX_TMP_FILES] ;
     /** Number of temporary files */
     int       ntmp ;
+    int       color;
 } gnuplot_ctrl ;
 
 /*---------------------------------------------------------------------------
@@ -414,5 +415,10 @@ int gnuplot_write_multi_csv(
     int                 n,
     int                 numColumns,
     char const      *   title);
+
+
+
+
+void gnuplot_set_color(gnuplot_ctrl * handle, int color);
 
 #endif

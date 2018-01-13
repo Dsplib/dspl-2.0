@@ -66,6 +66,7 @@ typedef double complex_t[2];
 #define ERROR_DIV_ZERO                  0x04102226
 /* E									0x05xxxxxx*/
 /* F									0x06xxxxxx*/
+#define ERROR_FFT_CREATE                0x06060318
 #define ERROR_FILTER_A0                 0x06100100
 #define ERROR_FILTER_ORD                0x06101518
 #define ERROR_FILTER_RP                 0x06101816
@@ -108,8 +109,15 @@ typedef double complex_t[2];
 #define DAT_COMPLEX     1
 
 
-int re2cmplx(double* x, int n, complex_t **y);
 int cmplx2re(complex_t* x, int n, double **re, double **im);
+int concat(void* a, size_t na, void *b, size_t nb, void** c, size_t *nc);
+
+
+int flipip(double* x, int n);
+int flipip_cmplx(complex_t* x, int n);
+
+int re2cmplx(double* x, int n, complex_t **y);
+
 
 int trapint(double* x, double* y, int n, double* sum);
 int trapint_cmplx(double* x, complex_t* y, int n, complex_t* sum);

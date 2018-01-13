@@ -53,6 +53,32 @@ int plot(void* hplot, double* x, double* y, int n, char* legend)
 
 
 
+/**************************************************************************************************
+Create Plot
+***************************************************************************************************/
+void* plot_create(void)
+{
+    return (void*) gnuplot_init();   
+}
+
+
+
+
+
+
+
+
+
+/**************************************************************************************************
+Delete Plot
+***************************************************************************************************/
+void plot_delete(void* hplot)
+{
+    gnuplot_close((gnuplot_ctrl*)hplot);
+}
+
+
+
 
 /**************************************************************************************************
 logX PLOT
@@ -77,28 +103,29 @@ int plot_logx(void* hplot, double* x, double* y, int n, char* legend)
 
 
 
-
 /**************************************************************************************************
-Create Plot
+Stem plot
 ***************************************************************************************************/
-void* plot_create(void)
+int plot_stem(void* hplot, double* x, double* y, int n, char* legend)
 {
-    return (void*) gnuplot_init();   
+    if(!x || !y)
+        return ERROR_PTR;
+    if(n<1)
+        return ERROR_SIZE;
+    if(!hplot)
+        return ERROR_PLOT_HANDLE;
+    
+    gnuplot_set_color((gnuplot_ctrl*)hplot, ((gnuplot_ctrl*)hplot)->nplots+1);
+    gnuplot_setstyle((gnuplot_ctrl*)hplot, "impulses");
+
+    gnuplot_plot_xy((gnuplot_ctrl*)hplot, x, y, n, legend);
+    gnuplot_setstyle((gnuplot_ctrl*)hplot, "points");
+    gnuplot_plot_xy((gnuplot_ctrl*)hplot, x, y, n, NULL);
+    gnuplot_set_color((gnuplot_ctrl*)hplot, 0);
+
+    return RES_OK;
 }
 
 
 
-
-
-
-
-
-
-/**************************************************************************************************
-Delete Plot
-***************************************************************************************************/
-void plot_delete(void* hplot)
-{
-    gnuplot_close((gnuplot_ctrl*)hplot);
-}
 
