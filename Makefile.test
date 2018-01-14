@@ -9,7 +9,7 @@ BIN_DIR = $(PRJ_DIR)/bin
 
 LIB_DSPL_PATH = lib/dspl/bin
 LIB_PLOT_PATH = lib/plot/bin
-LIB_EXT_PATH  = lib/extlibs
+LIB_EXT_PATH  = lib/extlibs/linux64
 
 
 SRC_FILES	= $(wildcard $(SRC_DIR)/*.c)
