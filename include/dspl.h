@@ -96,6 +96,8 @@ int randu(double* x, int n);
 
 int rcompos(double *b, double *a, int n, double *c, double *d, int p, double *beta, double *alpha);
 
+int signal_pimp(double* t, size_t n, double amp, double tau, double dt, double period, double* y);
+
 int window(double* w, int n, int win_type, double param);
 
 #endif

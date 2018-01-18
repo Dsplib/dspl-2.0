@@ -82,6 +82,7 @@ typedef double complex_t[2];
 /* L									0x12xxxxxx*/
 /* M									0x13xxxxxx*/
 /* N									0x14xxxxxx*/
+#define ERROR_NEGATIVE                  0x14050701
 /* O									0x15xxxxxx*/
 /* P									0x16xxxxxx*/
 #define ERROR_POLY_ORD                  0x16151518
@@ -109,14 +110,15 @@ typedef double complex_t[2];
 #define DAT_COMPLEX     1
 
 
-int cmplx2re(complex_t* x, int n, double **re, double **im);
-int concat(void* a, size_t na, void *b, size_t nb, void** c, size_t *nc);
+int cmplx2re(complex_t* x, int n, double *re, double *im);
+int concat(void* a, size_t na, void *b, size_t nb, void* c);
 
+double dmod (double x, double y);
 
 int flipip(double* x, int n);
 int flipip_cmplx(complex_t* x, int n);
 
-int re2cmplx(double* x, int n, complex_t **y);
+int re2cmplx(double* x, int n, complex_t *y);
 
 
 int trapint(double* x, double* y, int n, double* sum);
@@ -124,6 +126,8 @@ int trapint_cmplx(double* x, complex_t* y, int n, complex_t* sum);
 
 int writebin(void* x, int n, int dtype, char* fn);
 int writetxt(double* x, double *y, int n, char* fn);
+
+
 
 #endif
  

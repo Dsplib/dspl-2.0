@@ -19,54 +19,38 @@
 */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "common.h"
+#include <stdlib.h>  
+#include <string.h>     
+#include <math.h>
+#include "dspl.h"
 
 
 /**************************************************************************************************
-convert double array to a complex array 
+Rectangle pulse signal
 ***************************************************************************************************/
-int re2cmplx(double* x, int n, complex_t *y)
+int signal_pimp(double* t, size_t n, double amp, double tau, double dt, double period, double* y)
 {
     int k;
-    if(!x || !y)
+    double ll, lr, p2, tp;
+    
+    if(!t || !y)
         return ERROR_PTR;
     if(n < 1)
         return ERROR_SIZE;
+    if(tau < 0.0 || period < 0.0)
+        return ERROR_NEGATIVE;
+        
 
+    ll = -0.5 * tau;
+    lr =  0.5 * tau;
+    p2 = period*0.5;
     for(k = 0; k < n; k++)
-    {
-        RE(y[k]) = x[k];
-        IM(y[k]) = 0.0;
-    }    
-    return RES_OK;
+    {   
+        tp = dmod(t[k] - dt + p2, period) - p2;
+        y[k] = (tp < ll || tp > lr) ? 0.0 : amp;       
+    }
+
+    return RES_OK;    
 }
 
 
-
-
-
-/**************************************************************************************************
-convert complex array to a re and im arrays 
-***************************************************************************************************/
-int cmplx2re(complex_t* x, int n, double *re, double *im)
-{
-    int k;
-    if(!x)
-        return ERROR_PTR;
-    if(n < 1)
-        return ERROR_SIZE;
-
-    if(re)
-    {
-        for(k = 0; k < n; k++)
-            re[k] = RE(x[k]);
-    }
-    if(im)
-    {
-        for(k = 0; k < n; k++)
-            im[k] = IM(x[k]);
-    }
-    return RES_OK;
-}

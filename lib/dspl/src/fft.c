@@ -38,14 +38,18 @@ int fft_create( fft_t *pfft, int n)
         return ERROR_SIZE;
 
     if(pfft->in)
+    {
         if(pfft->size != n)
             pfft->in = (complex_t*) realloc(pfft->in, n*sizeof(complex_t));
+    }    
     else
         pfft->in = (complex_t*) malloc(n*sizeof(complex_t));
  
     if(pfft->out)
+    {
         if(pfft->size != n)
             pfft->out = (complex_t*) realloc(pfft->out, n*sizeof(complex_t));
+    }    
     else
         pfft->out = (complex_t*) malloc(n*sizeof(complex_t));
     

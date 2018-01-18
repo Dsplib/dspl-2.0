@@ -47,12 +47,14 @@ int freqs(double* b, double* a, int ord, double* w, int n, complex_t *h)
 		return ERROR_SIZE;
 
     RE(jw) = 0.0;
-    
-    res = re2cmplx(b, ord+1, &bc);
+
+    bc = (complex_t*) malloc((ord+1) * sizeof(complex_t));
+    res = re2cmplx(b, ord+1, bc);
     if( res!=RES_OK )
         goto exit_label;
- 
-    res = re2cmplx(a, ord+1, &ac); 
+    
+    ac = (complex_t*) malloc((ord+1) * sizeof(complex_t));
+    res = re2cmplx(a, ord+1, ac); 
     if( res!=RES_OK )
         goto exit_label;
 
@@ -113,15 +115,16 @@ int freqz(double* b, double* a, int ord, double* w, int n, complex_t *h)
 		return ERROR_SIZE;
 
     
-    
-    res = re2cmplx(b, ord+1, &bc);
+    bc = (complex_t*) malloc((ord+1) * sizeof(complex_t));
+    res = re2cmplx(b, ord+1, bc);
     if( res!=RES_OK )
         goto exit_label;
 
     if(a)
     {
         // IIR filter if a != NULL
-        res = re2cmplx(a, ord+1, &ac); 
+        ac = (complex_t*) malloc((ord+1) * sizeof(complex_t));
+        res = re2cmplx(a, ord+1, ac); 
         if( res!=RES_OK )
             goto exit_label;
         for(k = 0; k < n; k++)
