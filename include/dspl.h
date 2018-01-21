@@ -79,6 +79,9 @@ void fft_destroy(fft_t *pfft);
 
 int fft_shift(double* x, int n, double* y);
 
+int fourier_series_dec(double* t, double* s, int nt, double period, int nw, double* w, complex_t* y);
+int fourier_series_rec(double* w, complex_t* s, int nw, double *t, int nt, complex_t* y);
+
 int freqs(double* b, double* a, int ord, double* w, int n, complex_t *h);
 int freqz(double* b, double* a, int ord, double* w, int n, complex_t *h);
 

@@ -26,9 +26,9 @@
 
 
 
-int fourier_series_dec(double* t, double* s, size_t nt, double period, size_t nw, double* w, complex_t* y)
+int fourier_series_dec(double* t, double* s, int nt, double period, int nw, double* w, complex_t* y)
 {
-    size_t k, m;
+    int k, m;
     double dw = M_2PI / period;    
     complex_t e[2];
     
@@ -43,15 +43,15 @@ int fourier_series_dec(double* t, double* s, size_t nt, double period, size_t nw
 
     for(k = 0; k < nw; k++)
     {
-        w[k] = -(nw/2) * dw;       
+        w[k] = (k - nw/2) * dw;       
         RE(e[1]) =  s[0] * cos(w[k] * t[0]);
         IM(e[1]) = -s[0] * sin(w[k] * t[0]);    
         for(m = 1; m < nt; m++)
         {
             RE(e[0]) = RE(e[1]);
             IM(e[0]) = IM(e[1]);  
-            RE(e[1]) =  cos(w[k] * t[m]);
-            IM(e[1]) = -sin(w[k] * t[m]);
+            RE(e[1]) =   s[m] * cos(w[k] * t[m]);
+            IM(e[1]) = - s[m] * sin(w[k] * t[m]);
             RE(y[k]) += 0.5 * (RE(e[0]) + RE(e[1])) * (t[m-1] - t[m]);
             IM(y[k]) += 0.5 * (IM(e[0]) + IM(e[1])) * (t[m-1] - t[m]);
         }  
@@ -68,9 +68,11 @@ int fourier_series_dec(double* t, double* s, size_t nt, double period, size_t nw
 
 
 
-int fourier_series_rec(double* w, complex_t* s, size_t nw, double *t, size_t nt, complex_t* y)
+
+
+int fourier_series_rec(double* w, complex_t* s, int nw, double *t, int nt, complex_t* y)
 {
-    size_t k, m; 
+    int k, m; 
     complex_t e;   
     
     if(!t || !s || !w || !y)

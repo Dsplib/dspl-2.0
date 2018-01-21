@@ -33,12 +33,11 @@ int main(int argc, char* argv[]) {
 
     double t[N], s[N];
     void* hplot;
-    int i;
 
     linspace(-T, T, N, DSPL_SYMMETRIC, t);
     hplot = plot_create();
 
-//    int signal_pimp(double* t, size_t n, double amp, double tau, double dt, double period, double* y)
+
     signal_pimp(t, N, 2.0, 1.0, 0.0, T, s);    
     plot(hplot, t, s, N, "tau = 1, dt = 0");
 
