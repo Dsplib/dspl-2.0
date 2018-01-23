@@ -1,18 +1,16 @@
-CC      = gcc
-INC_DIR = include
-LIB_DIR = lib/dspl
+LIB_DIR    = lib/dspl
 COMMON_DIR = lib/common
+
+include Makefile.dirs
 
 
 SRC_DIR = $(LIB_DIR)/src
 OBJ_DIR = $(LIB_DIR)/obj
-BIN_DIR = $(LIB_DIR)/bin
 
 COMMON_SRC_DIR = $(COMMON_DIR)/src
 
 
 LIB_NAME = libdspl.a
-
 
 CFLAGS  = -c -Wall -O3 -I$(INC_DIR)
 
@@ -22,11 +20,11 @@ OBJ_FILES	= $(addprefix $(OBJ_DIR)/,$(notdir $(SRC_FILES:.c=.o)))
 COMMON_SRC_FILES	= $(wildcard $(COMMON_SRC_DIR)/*.c)
 COMMON_OBJ_FILES	= $(addprefix $(OBJ_DIR)/,$(notdir $(COMMON_SRC_FILES:.c=.o)))
 
-all: $(BIN_DIR)/$(LIB_NAME)
+all: $(RELEASE_DIR)/$(LIB_NAME)
 
 
-$(BIN_DIR)/$(LIB_NAME): $(OBJ_FILES) $(COMMON_OBJ_FILES)
-	ar rcs $(BIN_DIR)/$(LIB_NAME)  $(OBJ_FILES) $(COMMON_OBJ_FILES)
+$(RELEASE_DIR)/$(LIB_NAME): $(OBJ_FILES) $(COMMON_OBJ_FILES)
+	ar rcs $(RELEASE_DIR)/$(LIB_NAME)  $(OBJ_FILES) $(COMMON_OBJ_FILES)
 
 
 $(OBJ_DIR)/%.o:$(COMMON_SRC_DIR)/%.c
@@ -37,5 +35,4 @@ $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 
 clean:
 	rm -f   $(OBJ_DIR)/*.o
-	rm -f   $(BIN_DIR)/*.so
-	rm -f   $(BIN_DIR)/*.a
+	rm -f   $(RELEASE_DIR)/$(LIB_NAME)

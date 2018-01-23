@@ -1,36 +1,25 @@
-CC       = gcc
-INC_DIR  = include
 PRJ_DIR  = verif
 
 SRC_DIR = $(PRJ_DIR)/src
-OBJ_DIR = $(PRJ_DIR)/obj
 BIN_DIR = $(PRJ_DIR)/bin
 
+include Makefile.dirs
 
-LIB_DSPL_PATH = lib/dspl/bin
-LIB_PLOT_PATH = lib/plot/bin
 
 SRC_FILES	= $(wildcard $(SRC_DIR)/*.c)
-#OBJ_FILES	= $(addprefix $(OBJ_DIR)/,$(notdir $(SRC_FILES:.c=.o)))
 BIN_FILES	= $(addprefix $(BIN_DIR)/,$(notdir $(SRC_FILES:.c=.exe)))
 
 
 CFLAGS  = -static -Wall -O3 -I$(INC_DIR)
-
-#CFLAGS  = -c-Wall -O3 -I$(INC_DIR) -std=c99
+LFLAGS = -L$(RELEASE_DIR) -ldspl -lplot -lfftw3 -lm
 
 all: $(BIN_FILES)
 
 
 $(BIN_DIR)/%.exe: $(SRC_DIR)/%.c
-	$(CC)  $(CFLAGS)  $< -L$(LIB_DSPL_PATH) -ldspl -L$(LIB_PLOT_PATH) -lplot -lm -o $@ 
-
-
-#$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
-#	$(CC) $(CFLAGS)  $< -o $@
+	$(CC)  $(CFLAGS)  $< $(LFLAGS)  -o $@ 
 
 
 clean:
-	rm -f   $(OBJ_DIR)/*.o
 	rm -f   $(BIN_DIR)/*.exe
-	rm -f   $(BIN_DIR)/*.so
+

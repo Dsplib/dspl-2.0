@@ -22,21 +22,23 @@
 
 	DSPL-2.0 библиотека с открытым исходным кодом, написанная на языке Си.<BR>
     DSPL-2.0 использует наиболее эффективные сторонние библиотеки: <BR>
-    <a htef = "http://www.fftw.org/">libfftw3<a> библиотека алгоритмов быстрого преобразования Фурье.<BR>
-    <a htef = "http://www.netlib.org/lapack/">liblapack<a> библиотека алгоритмов линейной алгебры.<BR><BR>
+    <a href = "http://www.fftw.org/">libfftw3</a> библиотека алгоритмов быстрого преобразования Фурье.<BR>
+    <a href = "http://www.netlib.org/lapack/">liblapack</a> библиотека алгоритмов линейной алгебры.<BR><BR>
 
     
     DSPL-2.0 содержит собственные алгоритмы цифровой обработки сигналов, а также реализует интерфейс
-    для работы со сторонними библиотеками. <BR>
+    для работы со сторонними библиотеками как это показано на структуре: <BR>
+
+    \image html dspl_structure.png
 
     В дополнение к этому, совместно с DSPL-2.0,  релизована библиотека libplot, которая использует 
-    <a htef = "http://ndevilla.free.fr/gnuplot/">ANSI C интерфейс<a> с пакетом построения графиков 
-    <a htef = "http://www.gnuplot.info/">GNUPLOT<a>. 
+    <a href = "http://ndevilla.free.fr/gnuplot/">ANSI C интерфейс</a> с пакетом построения графиков 
+    <a href = "http://www.gnuplot.info/">GNUPLOT</a>. 
     
 
 
     Pаспространяется под лицензией <a href = "http://www.gnu.org/licenses/gpl.html">GPL v3</a>
-	Исходные коды библиотеки доступны на <a href = "https://github.com/Dsplib/dspl">GitHub</a>.<BR>
+	Исходные коды библиотеки доступны на <a href = "https://github.com/Dsplib/dspl-2.0">GitHub</a>.<BR>
 	Вы также можете внести свой вклад в развитие данной библиотеки. Присоединяйтесь!
 	
 */

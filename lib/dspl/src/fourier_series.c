@@ -52,8 +52,8 @@ int fourier_series_dec(double* t, double* s, int nt, double period, int nw, doub
             IM(e[0]) = IM(e[1]);  
             RE(e[1]) =   s[m] * cos(w[k] * t[m]);
             IM(e[1]) = - s[m] * sin(w[k] * t[m]);
-            RE(y[k]) += 0.5 * (RE(e[0]) + RE(e[1])) * (t[m-1] - t[m]);
-            IM(y[k]) += 0.5 * (IM(e[0]) + IM(e[1])) * (t[m-1] - t[m]);
+            RE(y[k]) += 0.5 * (RE(e[0]) + RE(e[1])) * (t[m] - t[m-1]);
+            IM(y[k]) += 0.5 * (IM(e[0]) + IM(e[1])) * (t[m] - t[m-1]);
         }  
         RE(y[k]) /= period;
         IM(y[k]) /= period;
