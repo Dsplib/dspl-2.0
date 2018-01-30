@@ -38,19 +38,20 @@
 typedef double complex_t[2];	 
 
 
-#define RE(x) (x[0])
-#define IM(x) (x[1]) 
+#define RE(x)           (x[0])
+#define IM(x)           (x[1]) 
 
-#define CMRE(a,b)  ((RE(a)) * (RE(b)) - (IM(a)) * (IM(b)))
-#define CMIM(a,b)  ((RE(a)) * (IM(b)) + (IM(a)) * (RE(b)))
+
+#define SQR(x)          ((x) * (x)) 
+#define ABSSQR(x)       ((SQR(RE(x))) + (SQR(IM(x))))
+#define ABS(x)          sqrt((ABSSQR(x)))
+
+#define CMRE(a,b)       ((RE(a)) * (RE(b)) - (IM(a)) * (IM(b)))
+#define CMIM(a,b)       ((RE(a)) * (IM(b)) + (IM(a)) * (RE(b)))
 
 #define CMCONJRE(a, b)  ((RE(a)) * (RE(b)) + (IM(a)) * (IM(b)))
 #define CMCONJIM(a, b)  ((IM(a)) * (RE(b)) - (RE(a)) * (IM(b))) 
 
-#define SQR(x) ((x) * (x)) 
-
-#define ABS(x)    sqrt((RE(x)) * (RE(x)) + (IM(x)) * (IM(x)))
-#define ABSSQR(x)     ((RE(x)) * (RE(x)) + (IM(x)) * (IM(x)))
 
 
 
@@ -65,6 +66,7 @@ typedef double complex_t[2];
 #define ERROR_DAT_TYPE                  0x04012020
 #define ERROR_DIV_ZERO                  0x04102226
 /* E									0x05xxxxxx*/
+#define ERROR_ELLIP_MODULE              0x05121315
 /* F									0x06xxxxxx*/
 #define ERROR_FFT_CREATE                0x06060318
 #define ERROR_FILTER_A0                 0x06100100
@@ -113,6 +115,8 @@ typedef double complex_t[2];
 int cmplx2re(complex_t* x, int n, double *re, double *im);
 int concat(void* a, size_t na, void *b, size_t nb, void* c);
 
+int cos_cmplx(complex_t* x, int n, complex_t *y);
+
 double dmod (double x, double y);
 
 int flipip(double* x, int n);
@@ -120,6 +124,7 @@ int flipip_cmplx(complex_t* x, int n);
 
 int re2cmplx(double* x, int n, complex_t *y);
 
+int sin_cmplx(complex_t* x, int n, complex_t *y);
 
 int trapint(double* x, double* y, int n, double* sum);
 int trapint_cmplx(double* x, complex_t* y, int n, complex_t* sum);

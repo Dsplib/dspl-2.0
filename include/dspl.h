@@ -71,6 +71,21 @@ int conv_cmplx(complex_t* a, int na, complex_t* b, int nb, complex_t* c);
 int dft(double* x, int n, complex_t *y);
 int dft_cmplx(complex_t* x, int n, complex_t *y);
 
+
+#define ELLIP_ITER       16
+#define ELLIP_MAX_ORD    24
+
+int ellip_acd(double* w, int n, double k, double* u);
+int ellip_asn(double* w, int n, double k, double* u);
+
+int ellip_cd(double* u, int n, double k, double* y);
+int ellip_landen(double k, int n, double* y);
+int ellip_sn(double* u, int n, double k, double* y);
+
+
+
+
+
 int filter_iir(double* b, double* a, int ord, double* x, int n, double* y);
 
 

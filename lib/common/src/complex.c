@@ -70,3 +70,63 @@ int cmplx2re(complex_t* x, int n, double *re, double *im)
     }
     return RES_OK;
 }
+
+
+
+
+
+
+/**************************************************************************************************
+Complex cosine
+***************************************************************************************************/
+int cos_cmplx(complex_t* x, int n, complex_t *y)
+{
+    int k;
+    double ep, em, sy, cy;
+    if(!x || !y)
+        return ERROR_PTR;
+    if(n < 1) 
+        return ERROR_SIZE;
+    
+    for(k = 0; k < n; k++)
+    {
+        ep = exp( RE(x[k]));
+        em = exp(-RE(x[k]));
+        sy = 0.5 * sin( IM(x[k]));
+        cy = 0.5 * cos( IM(x[k]));
+        RE(y[k]) = cy * (ep + em);
+        IM(y[k]) = sy * (ep - em);
+    } 
+    return RES_OK;
+}
+
+
+
+
+/**************************************************************************************************
+Complex cosine
+***************************************************************************************************/
+int sin_cmplx(complex_t* x, int n, complex_t *y)
+{
+    int k;
+    double ep, em, sy, cy;
+    if(!x || !y)
+        return ERROR_PTR;
+    if(n < 1) 
+        return ERROR_SIZE;
+    
+    for(k = 0; k < n; k++)
+    {
+        ep = exp( RE(x[k]));
+        em = exp(-RE(x[k]));
+        sy = 0.5 * sin( IM(x[k]));
+        cy = 0.5 * cos( IM(x[k]));
+        RE(y[k]) = cy * (ep - em);
+        IM(y[k]) = sy * (ep + em);
+    } 
+    return RES_OK;
+}
+
+
+
+
