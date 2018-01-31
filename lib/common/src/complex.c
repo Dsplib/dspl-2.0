@@ -82,7 +82,7 @@ Complex cosine
 int cos_cmplx(complex_t* x, int n, complex_t *y)
 {
     int k;
-    double ep, em, sy, cy;
+    double ep, em, sx, cx;
     if(!x || !y)
         return ERROR_PTR;
     if(n < 1) 
@@ -90,12 +90,12 @@ int cos_cmplx(complex_t* x, int n, complex_t *y)
     
     for(k = 0; k < n; k++)
     {
-        ep = exp( RE(x[k]));
-        em = exp(-RE(x[k]));
-        sy = 0.5 * sin( IM(x[k]));
-        cy = 0.5 * cos( IM(x[k]));
-        RE(y[k]) = cy * (ep + em);
-        IM(y[k]) = sy * (ep - em);
+        ep = exp( IM(x[k]));
+        em = exp(-IM(x[k]));
+        sx = 0.5 * sin(RE(x[k]));
+        cx = 0.5 * cos(RE(x[k]));
+        RE(y[k]) = cx * (em + ep);
+        IM(y[k]) = sx * (em - ep);
     } 
     return RES_OK;
 }
@@ -109,7 +109,7 @@ Complex cosine
 int sin_cmplx(complex_t* x, int n, complex_t *y)
 {
     int k;
-    double ep, em, sy, cy;
+    double ep, em, sx, cx;
     if(!x || !y)
         return ERROR_PTR;
     if(n < 1) 
@@ -117,13 +117,43 @@ int sin_cmplx(complex_t* x, int n, complex_t *y)
     
     for(k = 0; k < n; k++)
     {
-        ep = exp( RE(x[k]));
-        em = exp(-RE(x[k]));
-        sy = 0.5 * sin( IM(x[k]));
-        cy = 0.5 * cos( IM(x[k]));
-        RE(y[k]) = cy * (ep - em);
-        IM(y[k]) = sy * (ep + em);
-    } 
+        ep = exp( IM(x[k]));
+        em = exp(-IM(x[k]));
+        sx = 0.5 * sin(RE(x[k]));
+        cx = 0.5 * cos(RE(x[k]));
+        RE(y[k]) = sx * (em + ep);
+        IM(y[k]) = cx * (ep - em);
+   } 
+    return RES_OK;
+}
+
+
+
+
+/**************************************************************************************************
+SQRT complex
+***************************************************************************************************/
+int sqrt_cmplx(complex_t* x, int n, complex_t *y)
+{
+    int k;
+    double r, zr;
+    complex_t t;
+    if(!x || !y)
+        return ERROR_PTR;
+    if(n < 1) 
+        return ERROR_SIZE;
+    
+    for(k = 0; k < n; k++)
+    {
+        r = ABS(x[k]);
+        RE(t) = RE(x[k]) + r;
+        IM(t) = IM(x[k]);
+        zr = 1.0 / ABS(t);
+        r = sqrt(r);
+        RE(y[k]) = RE(t) * zr * r;
+        IM(y[k]) = IM(t) * zr * r;
+        
+   } 
     return RES_OK;
 }
 

@@ -125,6 +125,7 @@ int flipip_cmplx(complex_t* x, int n);
 int re2cmplx(double* x, int n, complex_t *y);
 
 int sin_cmplx(complex_t* x, int n, complex_t *y);
+int sqrt_cmplx(complex_t* x, int n, complex_t *y);
 
 int trapint(double* x, double* y, int n, double* sum);
 int trapint_cmplx(double* x, complex_t* y, int n, complex_t* sum);
