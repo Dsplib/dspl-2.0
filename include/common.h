@@ -111,6 +111,9 @@ typedef double complex_t[2];
 #define DAT_DOUBLE      0
 #define DAT_COMPLEX     1
 
+int acos_cmplx(complex_t* x, int n, complex_t *y);
+
+int asin_cmplx(complex_t* x, int n, complex_t *y);
 
 int cmplx2re(complex_t* x, int n, double *re, double *im);
 int concat(void* a, size_t na, void *b, size_t nb, void* c);
@@ -122,15 +125,19 @@ double dmod (double x, double y);
 int flipip(double* x, int n);
 int flipip_cmplx(complex_t* x, int n);
 
+int log_cmplx(complex_t* x, int n, complex_t *y);
+
 int re2cmplx(double* x, int n, complex_t *y);
 
 int sin_cmplx(complex_t* x, int n, complex_t *y);
+
 int sqrt_cmplx(complex_t* x, int n, complex_t *y);
 
 int trapint(double* x, double* y, int n, double* sum);
 int trapint_cmplx(double* x, complex_t* y, int n, complex_t* sum);
 
 int writebin(void* x, int n, int dtype, char* fn);
+
 int writetxt(double* x, double *y, int n, char* fn);
 
 

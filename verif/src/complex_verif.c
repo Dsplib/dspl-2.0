@@ -31,11 +31,25 @@ int main(int argc, char* argv[])
 {
     complex_t x[N], y[N];
 
+
     randn((double*)x, 2*N, 0.0, 100.0);
     writebin(x, N, DAT_COMPLEX,  "dat/complex_in.bin");
 
+    acos_cmplx(x, N, y);
+    writebin(y, N, DAT_COMPLEX,  "dat/complex_acos.bin");
+
+
+    asin_cmplx(x, N, y);
+    writebin(y, N, DAT_COMPLEX,  "dat/complex_asin.bin");
+
+
     cos_cmplx(x, N, y);
     writebin(y, N, DAT_COMPLEX,  "dat/complex_cos.bin");
+
+
+    log_cmplx(x, N, y);
+    writebin(y, N, DAT_COMPLEX,  "dat/complex_log.bin");
+
 
     sin_cmplx(x, N, y);
     writebin(y, N, DAT_COMPLEX,  "dat/complex_sin.bin");
@@ -43,6 +57,7 @@ int main(int argc, char* argv[])
 
     sqrt_cmplx(x, N, y);
     writebin(y, N, DAT_COMPLEX,  "dat/complex_sqrt.bin");
+
 
     return 0;
 }

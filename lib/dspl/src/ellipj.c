@@ -27,7 +27,6 @@
 /**************************************************************************************************
 inverse cd function
 ***************************************************************************************************/
-
 int ellip_acd(double* w, int n, double k, double* u)
 {
     double lnd[ELLIP_ITER], t;    
@@ -57,6 +56,64 @@ int ellip_acd(double* w, int n, double k, double* u)
     }
     return RES_OK;
 }
+
+
+
+
+
+/**************************************************************************************************
+inverse cd function
+***************************************************************************************************/
+int ellip_acd_cmplx(complex_t* w, int n, double k, complex_t* u)
+{
+    double lnd[ELLIP_ITER], t;
+    complex_t tmp0, tmp1;    
+    int i, m;    
+
+    if(!u || !w)
+        return ERROR_PTR;
+    if(n<1)
+        return ERROR_SIZE;
+    if(k < 0.0 || k>= 1.0)
+        return ERROR_ELLIP_MODULE; 
+
+    ellip_landen(k,ELLIP_ITER, lnd);
+    
+
+    for(m = 0; m < n; m++)
+    {
+        RE(u[m]) = RE(w[m]);
+        IM(u[m]) = IM(w[m]);
+        for(i = 1; i < ELLIP_ITER; i++)
+        {   
+            RE(tmp0) = lnd[i-1]*RE(u[m]);
+            IM(tmp0) = lnd[i-1]*IM(u[m]);  
+            RE(tmp1) = 1.0 - CMRE(tmp0, tmp0);
+            RE(tmp1) =     - CMIM(tmp0, tmp0);
+            
+            sqrt_cmplx(&tmp1, 1, &tmp0);
+            RE(tmp0) += 1.0;
+
+            RE(tmp1) = RE(tmp0) * (1.0 + lnd[i]);
+            IM(tmp1) = IM(tmp0) * (1.0 + lnd[i]);           
+
+            t = 2.0 / ABSSQR(tmp1);
+
+            RE(tmp0) = t * CMCONJRE(tmp1, u[m]);
+            IM(tmp0) = t * CMCONJIM(tmp1, u[m]);
+
+            RE(u[m]) = RE(tmp0);
+            IM(u[m]) = IM(tmp0);
+
+        }
+        acos_cmplx(&tmp0, 1, u+m);
+        t = 2.0 / M_PI;
+        RE(u[m]) *= t;
+        IM(u[m]) *= t;
+    }
+    return RES_OK;
+}
+
 
 
 
@@ -97,6 +154,65 @@ int ellip_asn(double* w, int n, double k, double* u)
 
 
 
+
+/**************************************************************************************************
+inverse sn function
+***************************************************************************************************/
+int ellip_asn_cmplx(complex_t* w, int n, double k, complex_t* u)
+{
+    double lnd[ELLIP_ITER], t;
+    complex_t tmp0, tmp1;    
+    int i, m;    
+
+    if(!u || !w)
+        return ERROR_PTR;
+    if(n<1)
+        return ERROR_SIZE;
+    if(k < 0.0 || k>= 1.0)
+        return ERROR_ELLIP_MODULE; 
+
+    ellip_landen(k,ELLIP_ITER, lnd);
+    
+
+    for(m = 0; m < n; m++)
+    {
+        RE(u[m]) = RE(w[m]);
+        IM(u[m]) = IM(w[m]);
+        for(i = 1; i < ELLIP_ITER; i++)
+        {   
+            RE(tmp0) = lnd[i-1]*RE(u[m]);
+            IM(tmp0) = lnd[i-1]*IM(u[m]);  
+            RE(tmp1) = 1.0 - CMRE(tmp0, tmp0);
+            RE(tmp1) =     - CMIM(tmp0, tmp0);
+            
+            sqrt_cmplx(&tmp1, 1, &tmp0);
+            RE(tmp0) += 1.0;
+
+            RE(tmp1) = RE(tmp0) * (1.0 + lnd[i]);
+            IM(tmp1) = IM(tmp0) * (1.0 + lnd[i]);           
+
+            t = 2.0 / ABSSQR(tmp1);
+
+            RE(tmp0) = t * CMCONJRE(tmp1, u[m]);
+            IM(tmp0) = t * CMCONJIM(tmp1, u[m]);
+
+            RE(u[m]) = RE(tmp0);
+            IM(u[m]) = IM(tmp0);
+
+        }
+        asin_cmplx(&tmp0, 1, u+m);
+        t = 2.0 / M_PI;
+        RE(u[m]) *= t;
+        IM(u[m]) *= t;
+    }
+    return RES_OK;
+}
+
+
+
+
+
+
 /**************************************************************************************************
 Elliptic cd function
 ***************************************************************************************************/
@@ -121,6 +237,54 @@ int ellip_cd(double* u, int n, double k, double* y)
         for(i = ELLIP_ITER-1; i>0; i--)
         {
             y[m] = (1.0 + lnd[i]) / (1.0 / y[m] + lnd[i]*y[m]);
+        }
+    }
+    return RES_OK;
+}
+
+
+
+
+
+
+/**************************************************************************************************
+Elliptic cd function
+***************************************************************************************************/
+int ellip_cd_cmplx(complex_t* u, int n, double k, complex_t* y)
+{
+    double lnd[ELLIP_ITER], t;    
+    int i, m; 
+    complex_t tmp;   
+
+    if(!u || !y)
+        return ERROR_PTR;
+    if(n<1)
+        return ERROR_SIZE;
+    if(k < 0.0 || k>= 1.0)
+        return ERROR_ELLIP_MODULE; 
+
+    ellip_landen(k,ELLIP_ITER, lnd);
+    
+
+    for(m = 0; m < n; m++)
+    {
+        RE(tmp) = RE(u[m]) * M_PI * 0.5;
+        IM(tmp) = IM(u[m]) * M_PI * 0.5;
+        
+        cos_cmplx(&tmp, 1, y+m);
+
+        for(i = ELLIP_ITER-1; i>0; i--)
+        {
+            t = 1.0 / ABSSQR(y[m]);
+    
+            RE(tmp) =  RE(y[m]) * t + RE(y[m]) * lnd[i];
+            IM(tmp) = -IM(y[m]) * t + IM(y[m]) * lnd[i];    
+
+            t = (1.0 + lnd[i]) / ABSSQR(tmp);
+
+            RE(y[m]) =   RE(tmp) * t;
+            IM(y[m]) =  -IM(tmp) * t;
+    
         }
     }
     return RES_OK;
@@ -188,6 +352,47 @@ int ellip_sn(double* u, int n, double k, double* y)
 }
 
 
+/**************************************************************************************************
+Elliptic sn function
+***************************************************************************************************/
+int ellip_sn_cmplx(complex_t* u, int n, double k, complex_t* y)
+{
+    double lnd[ELLIP_ITER], t;    
+    int i, m; 
+    complex_t tmp;   
 
+    if(!u || !y)
+        return ERROR_PTR;
+    if(n<1)
+        return ERROR_SIZE;
+    if(k < 0.0 || k>= 1.0)
+        return ERROR_ELLIP_MODULE; 
+
+    ellip_landen(k,ELLIP_ITER, lnd);
+    
+
+    for(m = 0; m < n; m++)
+    {
+        RE(tmp) = RE(u[m]) * M_PI * 0.5;
+        IM(tmp) = IM(u[m]) * M_PI * 0.5;
+        
+        sin_cmplx(&tmp, 1, y+m);
+
+        for(i = ELLIP_ITER-1; i>0; i--)
+        {
+            t = 1.0 / ABSSQR(y[m]);
+    
+            RE(tmp) =  RE(y[m]) * t + RE(y[m]) * lnd[i];
+            IM(tmp) = -IM(y[m]) * t + IM(y[m]) * lnd[i];    
+
+            t = (1.0 + lnd[i]) / ABSSQR(tmp);
+
+            RE(y[m]) =   RE(tmp) * t;
+            IM(y[m]) =  -IM(tmp) * t;
+    
+        }
+    }
+    return RES_OK;
+}
 
 

@@ -24,6 +24,58 @@
 #include "common.h"
 
 
+
+/**************************************************************************************************
+Acos complex
+***************************************************************************************************/
+int acos_cmplx(complex_t* x, int n, complex_t *y)
+{
+    int k, res;
+    double pi2 = 0.5 * M_PI; 
+
+    res = asin_cmplx(x, n, y);
+    if(res != RES_OK)
+        return res;    
+
+    for(k = 0; k < n; k++)
+    {
+        RE(y[k]) = pi2 - RE(y[k]);
+        IM(y[k]) =     - IM(y[k]);
+    } 
+    return RES_OK;
+}
+
+
+
+
+/**************************************************************************************************
+Asin complex
+***************************************************************************************************/
+int asin_cmplx(complex_t* x, int n, complex_t *y)
+{
+    int k;
+    complex_t tmp;
+    if(!x || !y)
+        return ERROR_PTR;
+    if(n < 1) 
+        return ERROR_SIZE;
+    
+    for(k = 0; k < n; k++)
+    {
+        RE(tmp) = 1.0 - CMRE(x[k], x[k]); // 1-x[k]^2
+        IM(tmp) =     - CMIM(x[k], x[k]); // 1-x[k]^2
+        sqrt_cmplx(&tmp, 1, y+k);         // sqrt(1 - x[k]^2)
+        RE(y[k]) -= IM(x[k]);             // j * x[k] + sqrt(1 - x[k]^2) 
+        IM(y[k]) += RE(x[k]);             // j * x[k] + sqrt(1 - x[k]^2) 
+        log_cmplx(y+k, 1, &tmp);          // log( j * x[k] + sqrt(1 - x[k]^2) )
+        RE(y[k]) =  IM(tmp);              // -j * log( j * x[k] + sqrt(1 - x[k]^2) )
+        IM(y[k]) = -RE(tmp);              // -j * log( j * x[k] + sqrt(1 - x[k]^2) )
+    } 
+    return RES_OK;
+}
+
+
+
 /**************************************************************************************************
 convert double array to a complex array 
 ***************************************************************************************************/
@@ -124,6 +176,28 @@ int sin_cmplx(complex_t* x, int n, complex_t *y)
         RE(y[k]) = sx * (em + ep);
         IM(y[k]) = cx * (ep - em);
    } 
+    return RES_OK;
+}
+
+
+
+
+/**************************************************************************************************
+Logarithm complex
+***************************************************************************************************/
+int log_cmplx(complex_t* x, int n, complex_t *y)
+{
+    int k;
+    if(!x || !y)
+        return ERROR_PTR;
+    if(n < 1) 
+        return ERROR_SIZE;
+    
+    for(k = 0; k < n; k++)
+    {
+        RE(y[k]) = 0.5 * log(ABSSQR(x[k]));
+        IM(y[k]) = atan2(IM(x[k]), RE(x[k]));  
+    } 
     return RES_OK;
 }
 
