@@ -58,9 +58,7 @@ int main(int argc, char* argv[]) {
 
 
     fftw_destroy_plan(pfftw);
-    fftw_free(in); 
-    fftw_free(out);
-    
-
+	free(in);
+	free(out);
     return 0;
 }
