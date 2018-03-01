@@ -89,7 +89,7 @@ int ellip_acd_cmplx(complex_t* w, int n, double k, complex_t* u)
             RE(tmp0) = lnd[i-1]*RE(u[m]);
             IM(tmp0) = lnd[i-1]*IM(u[m]);  
             RE(tmp1) = 1.0 - CMRE(tmp0, tmp0);
-            RE(tmp1) =     - CMIM(tmp0, tmp0);
+            IM(tmp1) =     - CMIM(tmp0, tmp0);
             
             sqrt_cmplx(&tmp1, 1, &tmp0);
             RE(tmp0) += 1.0;
@@ -183,7 +183,7 @@ int ellip_asn_cmplx(complex_t* w, int n, double k, complex_t* u)
             RE(tmp0) = lnd[i-1]*RE(u[m]);
             IM(tmp0) = lnd[i-1]*IM(u[m]);  
             RE(tmp1) = 1.0 - CMRE(tmp0, tmp0);
-            RE(tmp1) =     - CMIM(tmp0, tmp0);
+            IM(tmp1) =     - CMIM(tmp0, tmp0);
             
             sqrt_cmplx(&tmp1, 1, &tmp0);
             RE(tmp0) += 1.0;
