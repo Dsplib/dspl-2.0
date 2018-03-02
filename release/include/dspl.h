@@ -88,6 +88,7 @@ int ellip_cd(double* u, int n, double k, double* y);
 int ellip_cd_cmplx(complex_t* u, int n, double k, complex_t* y);
 
 int ellip_landen(double k, int n, double* y);
+int ellip_modulareq(double rp, double rs, int ord, double *k);
 
 int ellip_rat(double* w, int n, int ord, double k, double* u);
 

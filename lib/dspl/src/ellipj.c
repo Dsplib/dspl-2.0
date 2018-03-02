@@ -322,6 +322,53 @@ int ellip_landen(double k, int n, double* y)
 
 
 
+
+/**************************************************************************************************
+Elliptic modular equation
+***************************************************************************************************/
+int ellip_modulareq(double rp, double rs, int ord, double *k)
+{
+    double ep, es, ke, kp, t, sn;
+    int i, L, r;
+
+    if(rp < 0 || rp == 0)
+		return ERROR_FILTER_RP;
+    if(rs < 0 || rs == 0)
+		return ERROR_FILTER_RS;
+	if(ord < 1)
+		return ERROR_FILTER_ORD;
+    if(!k)
+        return ERROR_PTR;
+
+
+    ep = sqrt(pow(10.0, rp*0.1)-1.0);
+    es = sqrt(pow(10.0, rs*0.1)-1.0);
+    
+    ke = ep/es;
+
+    ke = sqrt(1.0 - ke*ke);
+
+    r = ord % 2;
+    L = (ord-r)/2;
+
+    kp = 1.0;
+    for(i = 0; i < L; i++)
+    {
+        t = (double)(2*i+1) / (double)ord;
+        ellip_sn(&t, 1, ke, &sn);
+        sn*=sn;
+        kp *= sn*sn;
+    }
+
+    kp *= pow(ke, (double)ord);
+    *k = sqrt(1.0 - kp*kp);
+
+    return RES_OK;
+    
+}
+
+
+
 /**************************************************************************************************
 Elliptic rational function
 ***************************************************************************************************/

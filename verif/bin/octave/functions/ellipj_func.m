@@ -5,7 +5,7 @@ function [cdj, snj] = ellipj_func(k, u, iter)
     cdj = cos(u*pi/2);
     snj = sin(u*pi/2);
 
-    for n = iter:-1:1
+    for n = iter:-1:2
         cdj = (1+lnd(n))./(1./cdj + lnd(n)*cdj); 
         snj = (1+lnd(n))./(1./snj + lnd(n)*snj); 
     end
