@@ -62,6 +62,8 @@ typedef struct{
   
 
 int butter_ap(double Rp, int ord, double* b, double* a);
+int butter_ap_zp(int ord, double rp, complex_t *z, int* nz, complex_t *p, int* np);
+
 int cheby1_ap(double Rp, int ord, double* b, double* a);
 int cheby2_ap(double Rs, int ord, double *b, double *a);
 
@@ -116,6 +118,8 @@ int goertzel_cmplx(complex_t *x, int n, int *ind, int k, complex_t *y);
 int linspace(double x0, double x1, int n, int type, double* x);
 int logspace(double x0, double x1, int n, int type, double* x);
 
+
+int poly_z2a(complex_t *z, int nz, int ord, complex_t *a);
 int polyval(double* a, int ord, double* x, int n, double* y);
 int polyval_cmplx(complex_t* a, int ord, complex_t* x, int n, complex_t* y);
 

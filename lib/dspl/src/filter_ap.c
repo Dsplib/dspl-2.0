@@ -25,6 +25,48 @@
 
 
 
+
+int butter_ap_zp(int ord, double rp, complex_t *z, int* nz, complex_t *p, int* np)
+{
+  	double alpha;
+	double theta; 
+    double ep; 
+    int r;
+	int L;
+    int ind = 0, k;
+
+    if(rp < 0 || rp == 0)
+		return ERROR_FILTER_RP;
+	if(ord < 1)
+		return ERROR_FILTER_ORD;
+	if(!z || !p || !nz || !np)
+		return ERROR_PTR;
+
+    ep = sqrt(pow(10.0, rp*0.1) - 1.0);
+	r = ord % 2;
+	L = (int)((ord-r)/2);
+
+    alpha = pow(ep, -1.0/(double)ord);
+    if(r)
+    {
+        RE(p[ind]) = -alpha;
+        IM(p[ind]) = 0.0;  
+        ind++;      
+    }
+    for(k = 0; k < L; k++)
+    {
+        theta = M_PI*(double)(2*k + 1)/(double)(2*ord);
+        RE(p[ind]) = RE(p[ind+1]) = -alpha *  sin(theta);
+        IM(p[ind]) =   alpha *  cos(theta);
+        IM(p[ind+1]) =  -alpha *  cos(theta);
+        ind+=2;
+    }    
+    return RES_OK;
+}
+
+
+
+
 /**************************************************************************************************
 Analog Normalized Butterworth filter  
 ***************************************************************************************************/
